@@ -214,4 +214,5 @@ def get_properties(p):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port="9090")
+    pynomer.append(query="\tHomo sapiens", matcher="globi-taxon-cache")
+    app.run(debug=True, host="0.0.0.0", port="9090", threaded=True)

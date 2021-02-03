@@ -57,20 +57,30 @@ def get_nomer_simple_cmd(
 
 def run_nomer(nomer_cmd):
     logger.debug("Run nomer command {}".format(nomer_cmd))
-    p = subprocess.Popen(
-        nomer_cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
-    )
-    result = p.communicate()[0].decode("utf8")
-    rc = p.returncode
-    if rc:
-        raise NomerException(
-            "Command {} got return code {}. This is probably due to nomer throwing an exception.".format(
-                nomer_cmd, rc
-            )
+    try:
+        result = subprocess.check_output(
+            [nomer_cmd], shell=True  # stderr=subprocess.DEVNULL
         )
-    logger.debug(
-        "Command {} got return code {} and result {}".format(nomer_cmd, rc, result)
-    )
-    if result:
-        return nomer_cmd, result.strip("\n")
+    except subprocess.CalledProcessError as e:
+        logger.error(
+            "An error occurred while executing command {} : {}".format(nomer_cmd, e)
+        )
+    else:
+        logger.debug("Command {} got result {}".format(nomer_cmd, result))
+        if result:
+            return nomer_cmd, result.decode("utf8").strip("\n")
+    # p = subprocess.Popen(
+    #     nomer_cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL
+    # )
+    # result = p.communicate()[0].decode("utf8")
+    # rc = p.returncode
+    # if rc:
+    #     raise NomerException(
+    #         "Command {} got return code {}. This is probably due to nomer throwing an exception.".format(
+    #             nomer_cmd, rc
+    #         )
+    #     )
+    # logger.debug(
+    #     "Command {} got return code {} and result {}".format(nomer_cmd, rc, result)
+    # )
     return nomer_cmd, None
