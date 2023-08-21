@@ -1,6 +1,5 @@
 import urllib
 import requests
-import json
 
 
 class NoResultException(Exception):
@@ -130,7 +129,7 @@ class NomerClient:
             return p
 
     def run_nomer(self, nomer_cmd="version", **kwargs):
-        url = "{}{}?{}".format(self.base_url, nomer_cmd, urllib.parse.urlencode(kwargs))
+        url = "{}{}?{}".format(self.base_url, nomer_cmd, urllib.urlencode(kwargs))
         resp = requests.get(url)
         resp.raise_for_status()
         self.check_ctype(resp.headers["Content-Type"])

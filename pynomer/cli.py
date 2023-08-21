@@ -1,6 +1,3 @@
-import urllib
-import requests
-import json
 import pynomer
 import click
 import logging
