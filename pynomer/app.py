@@ -207,7 +207,7 @@ def get_properties(p):
     if p:
         path = os.path.join(os.getcwd(), "input_properties")
         with open(path, "w") as f:
-            app.logger.debug(f"Create new file {path} with content {p}")
+            app.logger.debug("Create new file {0} with content {1}" % (path,p))
             f.write(p)
         return path
     return p

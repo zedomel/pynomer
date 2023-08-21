@@ -1,4 +1,4 @@
-from pynomer.nomer_utils import *
+from nomer_utils import *
 import logging
 
 logger = logging.getLogger(__name__)
